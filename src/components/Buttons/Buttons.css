@@ -1,0 +1,16 @@
+.Buttons-btn {
+  border: none;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 30px;
+  margin: 5px 2px 2px 2px;
+  letter-spacing: 1px;
+  outline: none;
+  background: gray;
+  color: #fff;
+  box-shadow: 0 6px #bdbdbd;
+  border-radius: 5px;
+  padding-top: 4px;
+}
