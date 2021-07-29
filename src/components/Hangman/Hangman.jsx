@@ -8,6 +8,11 @@ import img3 from "../../images/img3.png";
 import img4 from "../../images/img4.png";
 import img5 from "../../images/img5.png";
 import img6 from "../../images/img6.png";
+import wrong from "../../audio/no.mp3";
+import correct from "../../audio/yeah.mp3";
+import winning from "../../audio/winning.mp3";
+import lose from "../../audio/youreajoke.mp3";
+
 const axios = require("axios");
 
 export default function Hangman() {
@@ -17,6 +22,28 @@ export default function Hangman() {
   let [answer, setAnswer] = useState("");
   let [loaded, setLoaded] = useState(false);
   let [hint, setHint] = useState("");
+
+  let playCorrect = () => {
+    new Audio(correct).play();
+  };
+
+  let playWrong = () => {
+    new Audio(wrong).play();
+  };
+
+  let playW = new Audio(winning);
+
+  let playWinning = () => {
+    playW.play();
+  };
+
+  let pauseWinning = () => {
+    playW.pause();
+  };
+
+  let playLosing = () => {
+    new Audio(lose).play();
+  };
 
   let images = [img0, img1, img2, img3, img4, img5, img6];
 
@@ -39,10 +66,11 @@ export default function Hangman() {
     return getData();
   }, [loaded]);
 
-  //Adds guess to guessed letter state. Also adds number of wrong guesses if it is not
+  //Adds guess to guessed letter state. Also adds number to wrong guesses if the guess is not included in the answer
   let buttonClick = (e) => {
     setGuessed((prev) => new Set(prev).add(e.target.value));
     setWGuesses(wGuesses + (answer.includes(e.target.value) ? 0 : 1));
+    answer.includes(e.target.value) ? playCorrect() : playWrong();
   };
   //Creating the alphabete buttons
   let alphaButtons = "abcdefghijklmnopqrstuvwxyz"
@@ -57,17 +85,21 @@ export default function Hangman() {
       />
     ));
 
+  //Reset button to set state back to default
   let reset = () => {
     setGuessed(new Set());
     setLoaded(false);
     setWGuesses(0);
+    pauseWinning();
   };
+
   // setting a variable so that I can pass it through a terrinary operator
   let gameResults = (
     <div>
       <div className='Hangman-word'>{showGuess()}</div>
       <div>Hint: {hint}</div>
       {answer == showGuess().join("") ? <div>You Win!</div> : alphaButtons}
+      {answer == showGuess().join("") ? playWinning() : null}
     </div>
   );
   // loading page
@@ -97,6 +129,7 @@ export default function Hangman() {
       </div>
       <div>Wrong Guesses:{wGuesses}/6</div>
       {wGuesses >= 6 ? losing : gameResults}
+      {wGuesses == 6 ? playLosing() : null}
       <button id='reset' onClick={reset}>
         Reset?
       </button>
