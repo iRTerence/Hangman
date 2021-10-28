@@ -99,7 +99,6 @@ export default function Hangman() {
       <div className='Hangman-word'>{showGuess()}</div>
       <div>Hint: {hint}</div>
       {answer == showGuess().join("") ? <div>You Win!</div> : alphaButtons}
-      {answer == showGuess().join("") ? playWinning() : null}
     </div>
   );
   // loading page
