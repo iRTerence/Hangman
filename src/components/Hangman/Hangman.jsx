@@ -117,7 +117,7 @@ export default function Hangman() {
   let losing = (
     <div>
       <div>The answer is: {answer}</div>
-      <div>You Lose, lmao, what are you a LOSER?</div>
+      <div>You Lost!</div>
     </div>
   );
 
